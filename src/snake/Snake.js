@@ -56,21 +56,14 @@ export default class Snake {
     move(){
         const previousCells = this.deepCloneCells();
 
-        if(this.direction === LEFT){
-            this.cells[0].decrementX();
+        const keyMap = {
+            [LEFT]: () => this.cells[0].decrementX(),
+            [RIGHT]: () => this.cells[0].incrementX(),
+            [UP]: () => this.cells[0].decrementY(),
+            [DOWN]: () => this.cells[0].incrementY()
         }
 
-        if (this.direction === RIGHT) {
-            this.cells[0].incrementX();
-        }
-
-        if (this.direction === UP) {
-            this.cells[0].decrementY();
-        }
-
-        if (this.direction === DOWN) {
-            this.cells[0].incrementY();
-        }
+        keyMap[this.direction]();
 
         this.cells = this.cells.map((cell, i) => {
             if(i === 0) return cell;
