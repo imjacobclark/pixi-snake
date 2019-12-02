@@ -2,11 +2,11 @@ export default class Food {
     constructor(x, y, graphics) {
         this.x = x;
         this.y = y;
-        this.graphics = graphics;
+        this._graphics = graphics;
     }
 
-    getGraphics() {
-        return this.graphics;
+    get graphics() {
+        return this._graphics;
     }
 
     randomlyReposition(maxWidth, maxHeight){

@@ -17,11 +17,11 @@ export default class Snake {
         ];
 
         this.direction = DEFAULT_DIRECTION;
-        this.graphics = graphics;
+        this._graphics = graphics;
     }
 
-    getGraphics(){
-        return this.graphics;
+    get graphics(){
+        return this._graphics;
     }
 
     right(){

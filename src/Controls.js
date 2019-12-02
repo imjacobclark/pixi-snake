@@ -1,6 +1,7 @@
 export default class Controls {
-    constructor(snake) {
+    constructor(snake, gameStatus) {
         this.snake = snake;
+        this.gameStatus = gameStatus;
     }
 
     create(){
@@ -19,6 +20,10 @@ export default class Controls {
 
             if (e.keyCode === 37 || e.keyCode === 65 || e.keyCode === 81) {
                 this.snake.left();
+            }
+
+            if (e.keyCode === 32) {
+                this.gameStatus.status.toString === "running" ? this.gameStatus.setPaused() : this.gameStatus.setRunning();
             }
         })
     }
