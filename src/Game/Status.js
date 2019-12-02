@@ -1,12 +1,15 @@
+const RUNNING = "Game is running"
+const PAUSED = "Game is paused";
+
 class Status {
-  constructor(graphics, text, status = new Running()) {
+  constructor(graphics, text, status = RUNNING) {
     this._graphics = graphics;
     this._text = text;
     this._status = status;
   }
 
   get graphics() {
-    return this._text;
+    return this._text.text;
   }
 
   get status() {
@@ -14,36 +17,16 @@ class Status {
   }
 
   setRunning() {
-    this._status = new Running();
+    this._status = RUNNING;
   }
 
   setPaused() {
-    this._status = new Paused();
+    this._status = PAUSED;
   }
 
   draw(){
-    this._text.text = this._status.toString;
+    this._text.text.text = this._status;
   }
 }
 
-class Running {
-  constructor() {
-    this.toString = "running";
-  }
-
-  equals(other) {
-    return this.toString === other.toString;
-  }
-}
-
-class Paused {
-  constructor() {
-    this.toString = "paused";
-  }
-
-  equals(other) {
-    return this.toString === other.toString;
-  }
-}
-
-export { Status, Running };
+export { Status, RUNNING };
