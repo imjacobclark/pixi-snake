@@ -9,6 +9,7 @@
           margin: 0;
           padding: 0;
           text-align: center;
+          overflow: hidden;
       }
     </style>
 
@@ -23,25 +24,23 @@
       });
 
       const ONE_BLOCK_IN_PIXELS = 10;
+      const SCREEN_OUT_OF_BOUNDS_OFFSET = 1;
 
       import Snake from './src/Snake/Snake.js';
       import Food from './src/Food.js';
       import Controls from './src/Controls.js';
+      import Text from './src/Text.js';
       import TwoObjectCollision from './src/TwoObjectCollision.js';
-      import { Status, Running } from './src/Game/Status.js';
-
-      const emptyText = new PIXI.Text("", { fill: "white" });
-      emptyText.position.x = 20;
-      emptyText.position.y = 20;
+      import { Status, RUNNING } from './src/Game/Status.js';
 
       const snake = new Snake(new PIXI.Graphics());
       const food = new Food(20, 20, new PIXI.Graphics());
-      const gameStatus = new Status(new PIXI.Graphics(), emptyText);
-      const controls = new Controls(snake, gameStatus).create();
+      const status = new Status(new PIXI.Graphics(), new Text("", window.innerHeight - 30, 20));
+      const controls = new Controls(snake, status).create();
 
       const snakeApplication = new PIXI.Application({
-        width: window.innerWidth - 10,
-        height: window.innerHeight - 10,
+        width: window.innerWidth,
+        height: window.innerHeight,
         antialias: true,
         transparent: false,
         resolution: 1
@@ -60,21 +59,24 @@
       snakeApplication.ticker.add(delta => {
         if (TwoObjectCollision.hasCollided(snake.cells[0], food)) {
           snake.grow();
-          food.randomlyReposition(window.innerWidth / ONE_BLOCK_IN_PIXELS, window.innerHeight / ONE_BLOCK_IN_PIXELS)
+          food.randomlyReposition(
+            window.innerWidth / (ONE_BLOCK_IN_PIXELS + SCREEN_OUT_OF_BOUNDS_OFFSET), 
+            window.innerHeight / (ONE_BLOCK_IN_PIXELS + SCREEN_OUT_OF_BOUNDS_OFFSET)
+          );
         }
 
-        if (gameStatus.status.equals(new Running())) {
+        if (status.status === RUNNING) {
           snake.move();
         }
 
         snake.draw();
         food.draw();
-        gameStatus.draw();
+        status.draw();
       });
       
       snakeApplication.stage.addChild(snake.graphics);
       snakeApplication.stage.addChild(food.graphics);
-      snakeApplication.stage.addChild(gameStatus.graphics);
+      snakeApplication.stage.addChild(status.graphics);
     </script>
   </body>
 </html>

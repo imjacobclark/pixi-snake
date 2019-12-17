@@ -1,3 +1,5 @@
+import { RUNNING } from './Game/Status.js  '
+
 export default class Controls {
     constructor(snake, gameStatus) {
         this.snake = snake;
@@ -23,7 +25,7 @@ export default class Controls {
             }
 
             if (e.keyCode === 32) {
-                this.gameStatus.status.toString === "running" ? this.gameStatus.setPaused() : this.gameStatus.setRunning();
+                this.gameStatus.status === RUNNING ? this.gameStatus.setPaused() : this.gameStatus.setRunning();
             }
         })
     }

@@ -56,14 +56,14 @@ export default class Snake {
     move(){
         const previousCells = this.deepCloneCells();
 
-        const keyMap = {
+        const directions = {
             [LEFT]: () => this.cells[0].decrementX(),
             [RIGHT]: () => this.cells[0].incrementX(),
             [UP]: () => this.cells[0].decrementY(),
             [DOWN]: () => this.cells[0].incrementY()
         }
 
-        keyMap[this.direction]();
+        directions[this.direction]();
 
         this.cells = this.cells.map((cell, i) => {
             if(i === 0) return cell;
@@ -77,7 +77,7 @@ export default class Snake {
 
     draw(){
         this.graphics.clear();
-        this.graphics.beginFill(0xFFFFFF);
+        this.graphics.beginFill(0xADFF2F);
         this.cells.forEach(cell => {
             this.graphics.drawRect(cell.x * 11, cell.y * 11, 10, 10);
         });
