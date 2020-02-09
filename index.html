@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title>Snake</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.3/pixi.min.js"></script>
+    <script src="https://pixijs.io/pixi-sound/dist/pixi-sound.js"></script>
+  
     <style>
       body {
           margin: 0;
@@ -25,15 +27,18 @@
 
       const ONE_BLOCK_IN_PIXELS = 10;
       const SCREEN_OUT_OF_BOUNDS_OFFSET = 1;
+      const DIED_SOUND = PIXI.sound.Sound.from('./resources/sounds/died.mp3');
+      const EAT_SOUND = PIXI.sound.Sound.from('./resources/sounds/eat.mp3');
 
       import Snake from './src/Snake/Snake.js';
-      import Food from './src/Food.js';
-      import Controls from './src/Controls.js';
-      import Text from './src/Text.js';
-      import TwoObjectCollision from './src/TwoObjectCollision.js';
+      import Food from './src/Food/Food.js';
+      import Controls from './src/Game/Controls.js';
+      import Text from './src/Game/Text.js';
+      import Collision from './src/Collision/Collision.js';
       import { Status, RUNNING } from './src/Game/Status.js';
 
-      const snake = new Snake(new PIXI.Graphics());
+      const collision = new Collision(window.innerWidth, window.innerHeight);
+      const snake = new Snake(new PIXI.Graphics(), collision);
       const food = new Food(20, 20, new PIXI.Graphics());
       const status = new Status(new PIXI.Graphics(), new Text("", window.innerHeight - 30, 20));
       const controls = new Controls(snake, status).create();
@@ -58,12 +63,21 @@
       document.body.appendChild(snakeApplication.view);
       
       snakeApplication.ticker.add(delta => {
-        if(snake.hasCollidedWithSelf()) {
-          status.setLost()
+        if(snake.hasCollidedWithSelf() || snake.hasGoneOutOfBounds()) {
+          if(status.status === RUNNING){
+            DIED_SOUND.play();
+            snake.flash();
+          }
+
+          status.setLost();
+          
+          return
         }
 
-        if (TwoObjectCollision.hasCollided(snake.cells[0], food)) {
+        if (collision.hasCollided(snake.cells[0], food)) {
+          EAT_SOUND.play();
           snake.grow();
+          
           food.randomlyReposition(
             window.innerWidth / (ONE_BLOCK_IN_PIXELS + SCREEN_OUT_OF_BOUNDS_OFFSET), 
             window.innerHeight / (ONE_BLOCK_IN_PIXELS + SCREEN_OUT_OF_BOUNDS_OFFSET)

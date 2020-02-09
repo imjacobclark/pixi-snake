@@ -1,7 +1,8 @@
-export default class Cell {
+import Cell from '../Game/Cell.js';
+
+export default class SnakeCell extends Cell {
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
     }
 
     incrementX(){

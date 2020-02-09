@@ -1,5 +1,5 @@
-import Cell from './Cell.js';
-import TwoObjectCollision from '../TwoObjectCollision.js';
+import SnakeCell from './SnakeCell.js';
+import Collision from '../Collision/Collision.js';
 
 const UP = "up";
 const DOWN = "down";
@@ -8,17 +8,18 @@ const LEFT = "left";
 const DEFAULT_DIRECTION = RIGHT;
 
 export default class Snake {
-    constructor(graphics) {
+    constructor(graphics, collision) {
         this.cells = [
-            new Cell(0, 0),
-            new Cell(0, 1),
-            new Cell(0, 2),
-            new Cell(0, 3),
-            new Cell(0, 4)
+            new SnakeCell(0, 0),
+            new SnakeCell(0, 1),
+            new SnakeCell(0, 2),
+            new SnakeCell(0, 3),
+            new SnakeCell(0, 4)
         ];
 
         this.direction = DEFAULT_DIRECTION;
         this._graphics = graphics;
+        this._collision = collision;
     }
 
     get graphics(){
@@ -47,7 +48,7 @@ export default class Snake {
 
     grow() {
         const lastCell = this.cells[this.cells.length - 1];
-        this.cells.push(new Cell(lastCell.x, lastCell.y))
+        this.cells.push(new SnakeCell(lastCell.x, lastCell.y))
     }
 
     getHead(){
@@ -61,10 +62,11 @@ export default class Snake {
     }
 
     hasCollidedWithSelf(){
-        return this
-          .getBody()
-          .filter(bodyCell => TwoObjectCollision.hasCollided(this.getHead(), bodyCell))
-          .length > 0;
+        return this._collision.hasCollided(this.getHead(), this.getBody())
+    }
+
+    hasGoneOutOfBounds(){
+        return this._collision.hasGoneOutOfBounds(this.getHead())
     }
 
     deepCloneCells(){
@@ -91,6 +93,15 @@ export default class Snake {
 
             return cell;
         });
+    }
+
+    flash(){
+        this.graphics.clear()
+        setTimeout(() => this.draw(), 200);
+        setTimeout(() => this.graphics.clear(), 400);
+        setTimeout(() => this.draw(), 600);
+        setTimeout(() => this.graphics.clear(), 800);
+        setTimeout(() => this.draw(), 1000);
     }
 
     draw(){

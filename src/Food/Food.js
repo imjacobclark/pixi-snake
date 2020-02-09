@@ -1,7 +1,8 @@
-export default class Food {
+import Cell from '../Game/Cell.js';
+
+export default class Food extends Cell {
     constructor(x, y, graphics) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this._graphics = graphics;
     }
 
