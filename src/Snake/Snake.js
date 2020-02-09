@@ -1,4 +1,5 @@
 import Cell from './Cell.js';
+import TwoObjectCollision from '../TwoObjectCollision.js';
 
 const UP = "up";
 const DOWN = "down";
@@ -47,6 +48,23 @@ export default class Snake {
     grow() {
         const lastCell = this.cells[this.cells.length - 1];
         this.cells.push(new Cell(lastCell.x, lastCell.y))
+    }
+
+    getHead(){
+        return this.cells[0];
+    }
+
+    getBody(){
+        const cells = [...this.cells];
+        cells.shift()
+        return cells;
+    }
+
+    hasCollidedWithSelf(){
+        return this
+          .getBody()
+          .filter(bodyCell => TwoObjectCollision.hasCollided(this.getHead(), bodyCell))
+          .length > 0;
     }
 
     deepCloneCells(){

@@ -56,7 +56,12 @@
       snakeApplication.ticker.maxFPS = 1;
 
       document.body.appendChild(snakeApplication.view);
+      
       snakeApplication.ticker.add(delta => {
+        if(snake.hasCollidedWithSelf()) {
+          status.setLost()
+        }
+
         if (TwoObjectCollision.hasCollided(snake.cells[0], food)) {
           snake.grow();
           food.randomlyReposition(
