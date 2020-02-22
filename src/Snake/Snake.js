@@ -1,5 +1,4 @@
 import SnakeCell from './SnakeCell.js';
-import Collision from '../Collision/Collision.js';
 
 const UP = "up";
 const DOWN = "down";
