@@ -2,6 +2,8 @@
 
 HTML5 Snake game written in JavaScript, Pixi.js and Canvas.
 
+![](https://raw.githubusercontent.com/imjacobclark/pixi-snake/master/screenshots/screenshot.png?token=AAMQZWNOARVAIKS2JJTJTZ26KO47A)
+
 # Play
 
 You can play it here: https://snake.jacobclark.xyz
