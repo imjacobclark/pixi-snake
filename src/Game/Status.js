@@ -1,6 +1,6 @@
-const RUNNING = "Game is running, hit sacebar to pause";
-const PAUSED = "Game is paused, hit spacebar to resume";
-const LOST = "You have lost, refresh to play again...";
+const RUNNING = 'Game is running, hit sacebar to pause';
+const PAUSED = 'Game is paused, hit spacebar to resume';
+const LOST = 'You have lost, refresh to play again...';
 
 class Status {
   constructor(graphics, text, status = RUNNING) {
@@ -25,11 +25,11 @@ class Status {
     this._status = PAUSED;
   }
 
-  setLost(){
+  setLost() {
     this._status = LOST;
   }
 
-  draw(){
+  draw() {
     this._text.text.text = this._status;
   }
 }
