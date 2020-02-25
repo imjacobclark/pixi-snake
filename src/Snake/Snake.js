@@ -76,23 +76,24 @@ export default class Snake {
     const previousCells = this.deepCloneCells();
 
     const directions = {
-      [LEFT]: () => this.cells[0].decrementX(),
-      [RIGHT]: () => this.cells[0].incrementX(),
-      [UP]: () => this.cells[0].decrementY(),
-      [DOWN]: () => this.cells[0].incrementY(),
+      [LEFT]: () => this.getHead().decrementX(),
+      [RIGHT]: () => this.getHead().incrementX(),
+      [UP]: () => this.getHead().decrementY(),
+      [DOWN]: () => this.getHead().incrementY(),
     };
 
     directions[this.direction]();
 
     this.cells = this.cells.map((cell, i) => {
-      const updatedCell = cell;
+      const isHeadOfSnake = i === 0;
+      if (isHeadOfSnake) return cell;
 
-      if (i === 0) return updatedCell;
+      const cellToUpdate = cell;
+      const previousCell = previousCells[i - 1];
+      cellToUpdate.x = previousCell.x;
+      cellToUpdate.y = previousCell.y;
 
-      updatedCell.x = previousCells[i - 1].x;
-      updatedCell.y = previousCells[i - 1].y;
-
-      return updatedCell;
+      return cellToUpdate;
     });
   }
 

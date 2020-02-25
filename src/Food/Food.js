@@ -1,4 +1,4 @@
-import Cell from '../Game/Cell';
+import Cell from '../Snake/Cell';
 
 export default class Food extends Cell {
   constructor(x, y, graphics) {

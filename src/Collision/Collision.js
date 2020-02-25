@@ -8,10 +8,12 @@ export default class Collision {
     this.maxHeight = maxHeight;
   }
 
-  hasCollided(x, y) {
-    return y.length
-      ? y.filter((yi) => TwoObjectCollision.hasCollided(x, yi)).length > 0
-      : TwoObjectCollision.hasCollided(x, y);
+  hasCollided(object1, objectOrObjects) {
+    const isCollectionOfObjects = objectOrObjects.length;
+
+    return isCollectionOfObjects
+      ? objectOrObjects.filter(object2 => TwoObjectCollision.hasCollided(object1, object2)).length > 0
+      : TwoObjectCollision.hasCollided(object1, objectOrObjects);
   }
 
   hasGoneOutOfBounds(cellToCheck) {
