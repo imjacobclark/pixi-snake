@@ -3,16 +3,12 @@ import Cell from '../Snake/Cell';
 export default class Food extends Cell {
   constructor(x, y, graphics) {
     super(x, y);
-    this._graphics = graphics;
+    this.graphics = graphics;
   }
 
-  get graphics() {
-    return this._graphics;
-  }
-
-  randomlyReposition(maxWidth, maxHeight) {
-    this.x = Math.round(Math.random() * maxWidth);
-    this.y = Math.round(Math.random() * maxHeight);
+  randomlyReposition(x, y) {
+    this.x = Math.round(Math.random() * x);
+    this.y = Math.round(Math.random() * y);
   }
 
   draw() {
