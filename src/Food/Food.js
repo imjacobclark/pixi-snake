@@ -7,6 +7,7 @@ export default class Food extends Cell {
   }
 
   randomlyReposition(x, y) {
+    console.log(x,y)
     this.x = Math.round(Math.random() * x);
     this.y = Math.round(Math.random() * y);
   }

@@ -13,6 +13,9 @@ window.PIXI = PIXI;
 window.PIXISound = PIXISound;
 window.window.PIXI.sound = PIXISound.default;
 
+const windowWidth = window.innerWidth;
+const windowHeight = window.innerHeight;
+
 const ONE_BLOCK_IN_PIXELS = 10;
 const SCREEN_OUT_OF_BOUNDS_OFFSET = 1;
 
@@ -21,9 +24,6 @@ const MAXIMUM_Y_GRID_POSITIONS = windowHeight / (ONE_BLOCK_IN_PIXELS + SCREEN_OU
 
 const DIED_SOUND = window.PIXI.sound.Sound.from('./resources/sounds/died.mp3');
 const EAT_SOUND = window.PIXI.sound.Sound.from('./resources/sounds/eat.mp3');
-
-const windowWidth = window.innerWidth;
-const windowHeight = window.innerHeight;
 
 const collision = new Collision(windowWidth, windowHeight);
 const snake = new Snake(new window.PIXI.Graphics(), collision);
@@ -55,7 +55,7 @@ snakeApplication.ticker.add(() => {
 
   snake.move();
 
-  [snake, food, status].forEach((f) => f.draw());
+  [snake, food, status].forEach(f => f.draw());
 });
 
 snakeApplication.stage.addChild(snake.graphics);
