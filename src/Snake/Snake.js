@@ -74,10 +74,7 @@ export default class Snake {
     return JSON.parse(JSON.stringify(this.cells));
   }
 
-  move() {
-    this.direction = this.nextDirection;
-    const previousCells = this.deepCloneCells();
-
+  moveHead(){
     const directions = {
       [LEFT]: () => this.getHead().decrementX(),
       [RIGHT]: () => this.getHead().incrementX(),
@@ -86,6 +83,13 @@ export default class Snake {
     };
 
     directions[this.direction]();
+  }
+
+  move() {
+    this.direction = this.nextDirection;
+    const previousCells = this.deepCloneCells();
+
+    this.moveHead();
 
     this.cells = this.cells.map((cell, i) => {
       const isHeadOfSnake = i === 0;
