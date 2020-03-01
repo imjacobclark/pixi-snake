@@ -16,7 +16,9 @@ export default class Snake {
       new SnakeCell(0, 4),
     ];
 
-    this.direction = DEFAULT_DIRECTION;
+    this.nextDirection = DEFAULT_DIRECTION;
+    this.direction = null;
+
     this._graphics = graphics;
     this._collision = collision;
   }
@@ -27,22 +29,22 @@ export default class Snake {
 
   right() {
     if (this.direction === LEFT) return;
-    this.direction = RIGHT;
+    this.nextDirection = RIGHT;
   }
 
   left() {
     if (this.direction === RIGHT) return;
-    this.direction = LEFT;
+    this.nextDirection = LEFT;
   }
 
   up() {
     if (this.direction === DOWN) return;
-    this.direction = UP;
+    this.nextDirection = UP;
   }
 
   down() {
     if (this.direction === UP) return;
-    this.direction = DOWN;
+    this.nextDirection = DOWN;
   }
 
   grow() {
@@ -73,6 +75,7 @@ export default class Snake {
   }
 
   move() {
+    this.direction = this.nextDirection;
     const previousCells = this.deepCloneCells();
 
     const directions = {
