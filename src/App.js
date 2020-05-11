@@ -6,10 +6,10 @@ export default class App {
       antialias: true,
       transparent: false,
       resolution: 1,
-      forceCanvas: true
+      // forceCanvas: true
     });
     
-    // this.app.ticker.maxFPS = 1;
+    this.app.ticker.maxFPS = 1;
   }
 
   get ticker() {
