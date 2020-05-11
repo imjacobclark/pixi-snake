@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js-legacy';
 import * as PIXISound from 'pixi-sound';
 
 import Snake from './Snake/Snake';

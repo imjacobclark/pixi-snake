@@ -6,6 +6,7 @@ export default class App {
       antialias: true,
       transparent: false,
       resolution: 1,
+      forceCanvas: true
     });
 
     this.app.ticker.maxFPS = 1;

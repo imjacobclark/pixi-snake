@@ -7,6 +7,14 @@ export default class Controls {
   }
 
   create() {
+    const pauseOrResumeGame = () => {
+      if (this.gameStatus.status === RUNNING) {
+        this.gameStatus.setPaused();
+      } else {
+        this.gameStatus.setRunning();
+      }
+    }
+  
     document.addEventListener('keydown', (e) => {
       if (e.keyCode === 38 || e.keyCode === 87 || e.keyCode === 90) {
         this.snake.up();
@@ -25,12 +33,15 @@ export default class Controls {
       }
 
       if (e.keyCode === 32) {
-        if (this.gameStatus.status === RUNNING) {
-          this.gameStatus.setPaused();
-        } else {
-          this.gameStatus.setRunning();
-        }
+        pauseOrResumeGame();
       }
     });
+
+    const handleVisibilityChange = () => {
+      pauseOrResumeGame();
+    }
+
+    document.addEventListener('webkitvisibilitychange', handleVisibilityChange);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
   }
 }
