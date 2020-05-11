@@ -9,6 +9,8 @@ import Collision from './Collision/Collision';
 import { Status, RUNNING } from './Game/Status';
 import App from './App';
 
+alert('welcome')
+
 window.PIXI = PIXI;
 window.PIXISound = PIXISound;
 window.window.PIXI.sound = PIXISound.default;
