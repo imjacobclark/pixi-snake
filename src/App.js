@@ -9,7 +9,7 @@ export default class App {
       forceCanvas: true
     });
     
-    this.app.ticker.maxFPS = 1;
+    // this.app.ticker.maxFPS = 1;
   }
 
   get ticker() {
