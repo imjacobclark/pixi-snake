@@ -8,7 +8,7 @@ export default class App {
       resolution: 1,
       forceCanvas: true
     });
-
+    
     this.app.ticker.maxFPS = 1;
   }
 
