@@ -9,8 +9,6 @@ import Collision from './Collision/Collision';
 import { Status, RUNNING } from './Game/Status';
 import App from './App';
 
-alert('welcome')
-
 window.PIXI = PIXI;
 window.PIXISound = PIXISound;
 window.window.PIXI.sound = PIXISound.default;
@@ -38,27 +36,27 @@ new Controls(snake, status).create();
 
 const snakeApplication = new App(windowWidth, windowHeight);
 
-// snakeApplication.ticker.add(() => {
-//   if (status.status !== RUNNING) return;
+snakeApplication.ticker.add(() => {
+  if (status.status !== RUNNING) return;
 
-//   if (snake.hasCollidedWithSelf() || snake.hasGoneOutOfBounds()) {
-//     DIED_SOUND.play();
-//     snake.flash();
-//     status.setLost();
+  if (snake.hasCollidedWithSelf() || snake.hasGoneOutOfBounds()) {
+    DIED_SOUND.play();
+    snake.flash();
+    status.setLost();
 
-//     return;
-//   }
+    return;
+  }
 
-//   if (collision.hasCollided(snake.getHead(), food)) {
-//     EAT_SOUND.play();
-//     snake.grow();
-//     food.randomlyReposition(MAXIMUM_X_GRID_POSITIONS, MAXIMUM_Y_GRID_POSITIONS);
-//   }
+  if (collision.hasCollided(snake.getHead(), food)) {
+    EAT_SOUND.play();
+    snake.grow();
+    food.randomlyReposition(MAXIMUM_X_GRID_POSITIONS, MAXIMUM_Y_GRID_POSITIONS);
+  }
 
-//   snake.move();
+  snake.move();
 
-//   [snake, food, status].forEach(f => f.draw());
-// });
+  [snake, food, status].forEach(f => f.draw());
+});
 
 snakeApplication.stage.addChild(snake.graphics);
 snakeApplication.stage.addChild(food.graphics);

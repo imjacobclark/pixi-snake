@@ -4,9 +4,9 @@ export default class App {
       width: windowWidth,
       height: windowHeight,
       antialias: true,
-      transparent: false,
+      transparent: true,
       resolution: 1,
-      // forceCanvas: true
+      forceCanvas: true
     });
     
     this.app.ticker.maxFPS = 1;
