@@ -32,34 +32,34 @@ const food = new Food(20, 20, new window.PIXI.Graphics());
 
 const status = new Status(new window.PIXI.Graphics(), new Text('', windowHeight - 30, 20));
 
-new Controls(snake, status).create();
+new Controls(snake, status).create().then(() => {
+  const snakeApplication = new App(windowWidth, windowHeight);
 
-const snakeApplication = new App(windowWidth, windowHeight);
+  snakeApplication.ticker.add(() => {
+    if (status.status !== RUNNING) return;
 
-snakeApplication.ticker.add(() => {
-  if (status.status !== RUNNING) return;
+    if (snake.hasCollidedWithSelf() || snake.hasGoneOutOfBounds()) {
+      DIED_SOUND.play();
+      snake.flash();
+      status.setLost();
 
-  if (snake.hasCollidedWithSelf() || snake.hasGoneOutOfBounds()) {
-    DIED_SOUND.play();
-    snake.flash();
-    status.setLost();
+      return;
+    }
 
-    return;
-  }
+    if (collision.hasCollided(snake.getHead(), food)) {
+      EAT_SOUND.play();
+      snake.grow();
+      food.randomlyReposition(MAXIMUM_X_GRID_POSITIONS, MAXIMUM_Y_GRID_POSITIONS);
+    }
 
-  if (collision.hasCollided(snake.getHead(), food)) {
-    EAT_SOUND.play();
-    snake.grow();
-    food.randomlyReposition(MAXIMUM_X_GRID_POSITIONS, MAXIMUM_Y_GRID_POSITIONS);
-  }
+    snake.move();
 
-  snake.move();
+    [snake, food, status].forEach(f => f.draw());
+  });
 
-  [snake, food, status].forEach(f => f.draw());
+  snakeApplication.stage.addChild(snake.graphics);
+  snakeApplication.stage.addChild(food.graphics);
+  snakeApplication.stage.addChild(status.graphics);
+
+  document.getElementById("snake__game").appendChild(snakeApplication.view);
 });
-
-snakeApplication.stage.addChild(snake.graphics);
-snakeApplication.stage.addChild(food.graphics);
-snakeApplication.stage.addChild(status.graphics);
-
-document.getElementById("snake__game").appendChild(snakeApplication.view);
