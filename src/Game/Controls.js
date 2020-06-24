@@ -1,11 +1,10 @@
 import { RUNNING } from './Status';
 
-import * as speechCommands from '@tensorflow-models/speech-commands';
-
 export default class Controls {
-  constructor(snake, gameStatus) {
+  constructor(snake, gameStatus, speech) {
     this.snake = snake;
     this.gameStatus = gameStatus;
+    this.speech = speech;
   }
 
   create() {
@@ -46,15 +45,16 @@ export default class Controls {
     document.addEventListener('webkitvisibilitychange', handleVisibilityChange);
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
-    const recognizer = speechCommands.create("BROWSER_FFT");
+    const recognizer = this.speech.create("BROWSER_FFT");
     return recognizer.ensureModelLoaded().then(() => {
       const classLabels = recognizer.wordLabels();
 
       return recognizer.listen(result => {
         const scores = result.scores;
         const max = Math.max(...scores);
+
         for (let i = 0; i < classLabels.length; i++) {
-          if (max.toFixed(2) === result.scores[i].toFixed(2)) {
+          if (max.toFixed(2) === scores[i].toFixed(2)) {
             switch(classLabels[i]){
               case 'up':
                 this.snake.up();
@@ -74,7 +74,8 @@ export default class Controls {
       }, 
       {
         includeSpectrogram: true,
-        probabilityThreshold: 0.75
+        probabilityThreshold: 0.75,
+        overlapFactor: 0.5
       });
     });
   }

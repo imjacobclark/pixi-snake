@@ -1,6 +1,8 @@
 import * as PIXI from 'pixi.js-legacy';
 import * as PIXISound from 'pixi-sound';
 
+import * as speech from '@tensorflow-models/speech-commands';
+
 import Snake from './Snake/Snake';
 import Food from './Food/Food';
 import Controls from './Game/Controls';
@@ -32,7 +34,7 @@ const food = new Food(20, 20, new window.PIXI.Graphics());
 
 const status = new Status(new window.PIXI.Graphics(), new Text('', windowHeight - 30, 20));
 
-new Controls(snake, status).create().then(() => {
+new Controls(snake, status, speech).create().then(() => {
   const snakeApplication = new App(windowWidth, windowHeight);
 
   snakeApplication.ticker.add(() => {
